@@ -37,6 +37,7 @@
 #include <time.h>
 #include <errno.h>
 #include <signal.h>
+#include <sys/socket.h>
 
 #ifdef WINDOWS
 
@@ -274,10 +275,16 @@ void create_sockets(void)
         log0(0, 0, 0, "Error getting bind address: %s", gai_strerror(rval));
         exit(ERR_SOCKET);
     }
-    if (bind(sock, ai_rval->ai_addr, ai_rval->ai_addrlen) == SOCKET_ERROR) {
+    struct sockaddr_in *sa = (struct sockaddr_in *)ai_rval->ai_addr;
+
+    if( inet_aton("192.168.8.1", &sa->sin_addr) < 0 )
+    {
+    }
+    if (bind(sock, (struct sockaddr *)sa, ai_rval->ai_addrlen) == SOCKET_ERROR) {
         sockerror(0, 0, 0, "Error binding socket");
         exit(ERR_SOCKET);
     }
+printf("bind to port %d: %s\n",ntohs(sa->sin_port),inet_ntoa(sa->sin_addr));
     freeaddrinfo(ai_rval);
 
     // Set send/receive buffer size, ttl, and multicast interface
