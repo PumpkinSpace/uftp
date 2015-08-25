@@ -277,7 +277,7 @@ void create_sockets(void)
     }
     struct sockaddr_in *sa = (struct sockaddr_in *)ai_rval->ai_addr;
 
-    if( inet_aton("192.168.8.1", &sa->sin_addr) < 0 )
+    if( inet_aton("192.168.3.2", &sa->sin_addr) < 0 )
     {
     }
     if (bind(sock, (struct sockaddr *)sa, ai_rval->ai_addrlen) == SOCKET_ERROR) {

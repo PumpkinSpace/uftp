@@ -1,0 +1,6 @@
+# objects
+*.o
+uftp
+uftpd
+uftp_keymgt
+uftpproxyd
